@@ -1,4 +1,3 @@
-import { JSX } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
     Home,
@@ -11,24 +10,17 @@ import {
     Activity
 } from 'lucide-react';
 
-import { User as UserType } from '../../types';
+import { NavItemHeaders, User as UserType } from '../../types';
 import { SidebarState } from '../../hooks/atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { toggleSidebarState } from '../../hooks/selectors';
-
-interface NavItem {
-    name: string;
-    href: string;
-    icon: JSX.Element;
-    roles: string[];
-}
 
 const Sidebar = ({ user }: { user: UserType }) => {
     const location = useLocation();
     const value = useRecoilValue(SidebarState);
     const toggle = useSetRecoilState(toggleSidebarState);
 
-    const navItems: NavItem[] = [
+    const navItems: NavItemHeaders[] = [
         {
             name: 'Dashboard',
             href: `/${user.role}`,
@@ -116,7 +108,8 @@ const Sidebar = ({ user }: { user: UserType }) => {
                                 <Link
                                     to={item.href}
                                     className={`flex items-center px-3 py-2 rounded-md transition-colors
-                                                ${isActive ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'}`}
+                                                ${isActive ? `bg-blue-50 text-blue-700 ${user.role == "doctor" ? 'text-teal-700' : 'text-blue-700'}`
+                                            : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'}`}
                                 >
                                     <span className="mr-3">{item.icon}</span>
                                     {!value && <span>{item.name}</span>}
@@ -130,11 +123,13 @@ const Sidebar = ({ user }: { user: UserType }) => {
             <div className="absolute bottom-15 left-0 right-0 p-4">
                 {!value && (
                     <div className="bg-blue-50 p-4 rounded-lg">
-                        <h4 className="font-medium text-blue-800">Need Help?</h4>
-                        <p className="text-sm text-blue-700 mt-1">
+                        <h4 className={`font-medium ${user.role == "doctor" ? 'text-teal-800' : 'text-blue-800'}`}>
+                            Need Help?
+                        </h4>
+                        <p className={`text-sm mt-1 ${user.role == "doctor" ? 'text-teal-700' : 'text-blue-700'}`}>
                             Contact our support team anytime
                         </p>
-                        <button className="mt-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded-md transition-colors">
+                        <button className={`mt-2 text-sm font-medium text-white  py-1 px-3 rounded-md transition-colors ${user.role == "doctor" ? 'bg-teal-600 hover:bg-teal-700' : 'bg-blue-600 hover:bg-blue-700'}`}>
                             Get Support
                         </button>
                     </div>

@@ -1,24 +1,22 @@
-import { Activity, Bell, FileText } from "lucide-react"
+import { Bell, FileText } from "lucide-react"
 import Card from "../../components/ui/Card"
 import Button from "../../components/ui/Button"
 import EmptyState from "../../components/shared/EmptyState"
-import PatientRecord from "../../components/patient/PatientRecord"
-import AppointmentCard from "../../components/appointments/AppointmentCard"
 import { mockPatients } from "../../data/patient"
 import { useNavigate } from "react-router-dom"
+import HealthCard from "../../components/health-stats/HealthCard"
+import { useState } from "react"
 
-function PatientDashboard() {
+function PatientHealthStat({ userRole }: { userRole: string }) {
     const navigate = useNavigate();
+    const [inDetail, setInDetail] = useState(false);
 
     // For demo purposes, we'll use the first patient
     const patient = mockPatients[0];
-    // when fetching appoitments and records from backend get only 2 in dashboard
     const upcomingAppointments = patient.upcomingAppointments || [];
-    const recentRecords = patient.medicalHistory?.slice(0, 2) || [];
 
     const handleBookAppointment = () => {
         navigate('/patient/appointments/book');
-        // This would typically navigate to the appointment booking page
     };
 
     return (
@@ -30,23 +28,24 @@ function PatientDashboard() {
                     {/* Appointments Section */}
                     <section>
                         <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-xl font-semibold text-gray-800">Upcoming Appointments</h2>
+                            <h2 className="text-xl font-semibold text-gray-800">Health Stats</h2>
                             <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={() => navigate('/patient/appointments')}
+                                onClick={() => { setInDetail(!inDetail) }}
                             >
-                                View All
+                                View Details
                             </Button>
                         </div>
 
                         {upcomingAppointments.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {upcomingAppointments.slice(0, 2).map((appointment, index) => (
-                                    <AppointmentCard
+                                    <HealthCard
                                         key={index}
                                         appointment={appointment}
                                         userRole="patient"
+                                        detailed={inDetail}
                                     />
                                 ))}
                             </div>
@@ -60,61 +59,10 @@ function PatientDashboard() {
                             />
                         )}
                     </section>
-
-                    {/* Medical Records Section */}
-                    <section>
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-xl font-semibold text-gray-800">Recent Medical Records</h2>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => navigate('/patient/records')}
-                            >
-                                View All
-                            </Button>
-                        </div>
-
-                        {recentRecords.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {recentRecords.slice(0, 2).map((record, index) => (
-                                    <PatientRecord
-                                        key={index}
-                                        record={record}
-                                        layout="compact"
-                                    />
-                                ))}
-                            </div>
-                        ) : (
-                            <EmptyState type="records" />
-                        )}
-                    </section>
                 </div>
 
                 {/* Sidebar */}
                 <div className="space-y-6">
-                    {/* Health Stats */}
-                    <Card title="Health Stats" hover>
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center">
-                                    <Activity size={20} className="text-blue-500 mr-2" />
-                                    <span className="text-sm font-medium">Last Checkup</span>
-                                </div>
-                                <span className="text-sm">
-                                    {patient.medicalHistory?.[0]?.date || 'N/A'}
-                                </span>
-                            </div>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                fullWidth
-                                icon={<Activity size={16} />}
-                                onClick={() => navigate("/patient/health-stats")}
-                            >
-                                View Health Dashboard
-                            </Button>
-                        </div>
-                    </Card>
 
                     {/* Notifications */}
                     <Card title="Notifications" hover>
@@ -159,4 +107,4 @@ function PatientDashboard() {
     )
 }
 
-export default PatientDashboard
+export default PatientHealthStat

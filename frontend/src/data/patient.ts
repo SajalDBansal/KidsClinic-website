@@ -18,7 +18,23 @@ export const mockPatients: Patient[] = [
                 diagnosis: 'Seasonal Allergies',
                 treatment: 'Prescribed antihistamine',
                 notes: 'Patient responded well to treatment',
-                followUp: '2024-01-15'
+                followUp: '2024-01-15',
+                prescription: [{
+                    medicine: "Cardinox",
+                    dosage: "1 tablet in the morning daily",
+                    note: "Take with food"
+                },
+                {
+                    medicine: "Zymenta",
+                    dosage: "2 capsules twice a day",
+                    note: "Every 12 hours"
+                },
+                {
+                    medicine: "Relpanol",
+                    dosage: "1 tablet at night",
+                    note: "May cause drowsiness"
+                },
+                ]
             },
             {
                 id: 'mr2',
@@ -28,7 +44,17 @@ export const mockPatients: Patient[] = [
                 diagnosis: 'Ear Infection',
                 treatment: 'Prescribed antibiotics',
                 notes: 'Complete 10-day course',
-                followUp: '2023-10-20'
+                followUp: '2023-10-20',
+                prescription: [{
+                    medicine: "Gastrofree",
+                    dosage: "1 tablet before each meal",
+                    note: "Max 3 times daily"
+                },
+                {
+                    medicine: "Neuramaxin",
+                    dosage: "1 capsule every 8 hours",
+                    note: "Continue for 7 days"
+                },]
             }
         ],
         upcomingAppointments: [
@@ -92,7 +118,17 @@ export const mockPatients: Patient[] = [
                 diagnosis: 'Common Cold',
                 treatment: 'Rest and fluids',
                 notes: 'Symptoms should resolve within a week',
-                followUp: '2024-01-24'
+                followUp: '2024-01-24',
+                prescription: [{
+                    medicine: "Cardinox",
+                    dosage: "1 tablet in the morning daily",
+                    note: "Take with food"
+                },
+                {
+                    medicine: "Cardinox",
+                    dosage: "1 tablet in the morning daily",
+                    note: "Take with food"
+                },]
             }
         ],
         upcomingAppointments: [
@@ -126,7 +162,17 @@ export const mockPatients: Patient[] = [
                 diagnosis: 'Asthma',
                 treatment: 'Prescribed inhaler',
                 notes: 'Monitor breathing patterns',
-                followUp: '2024-02-20'
+                followUp: '2024-02-20',
+                prescription: [{
+                    medicine: "Cardinox",
+                    dosage: "1 tablet in the morning daily",
+                    note: "Take with food"
+                },
+                {
+                    medicine: "Cardinox",
+                    dosage: "1 tablet in the morning daily",
+                    note: "Take with food"
+                },]
             }
         ],
         upcomingAppointments: [

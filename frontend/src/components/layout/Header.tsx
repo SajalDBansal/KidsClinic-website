@@ -1,10 +1,10 @@
-import { LogOut, User, UserCircle } from "lucide-react"
+import { BriefcaseMedical, LogOut, User, UserCircle } from "lucide-react"
 import Button from "../ui/Button";
 import { useState } from 'react';
 import { Menu, X, Bell } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Avatar from "../ui/Avatar";
-import { User as UserTypes } from "../../types";
+import { NavItemHeaders, User as UserTypes } from "../../types";
 
 const notifications = [
     "The clinic will remain closed on 27/04/2025. You may drop a WhatsApp message in case of an emergency.",
@@ -15,10 +15,60 @@ const notifications = [
 const Header = ({ user }: { user: UserTypes }) => {
     const navigate = useNavigate();
 
-    const navLinks = [
-        { name: 'Dashboard', href: `/${user.role}` },
-        { name: 'Appointments', href: `/${user.role}/appointments` },
-    ]
+    const navItems: NavItemHeaders[] = [
+        {
+            name: 'Dashboard',
+            href: `/${user.role}`,
+            roles: ['patient', 'doctor', 'staff']
+        },
+        {
+            name: 'Appointments',
+            href: `/${user.role}/appointments`,
+            roles: ['patient', 'doctor', 'staff']
+        },
+        {
+            name: 'Patients',
+            href: '/doctor/patients',
+            roles: ['doctor']
+        },
+        {
+            name: 'Staff',
+            href: '/staff/employees',
+            roles: ['staff']
+        },
+        {
+            name: 'Medical Records',
+            href: `/${user.role}/records`,
+            roles: ['patient', 'doctor']
+        },
+        {
+            name: 'Messages',
+            href: `/${user.role}/messages`,
+            roles: ['patient', 'doctor', 'staff']
+        },
+        {
+            name: 'Health Stats',
+            href: '/patient/health-stats',
+            roles: ['patient']
+        },
+        {
+            name: 'Profile',
+            href: `/${user.role}/profile`,
+            roles: ['patient', 'doctor', 'staff']
+        },
+        {
+            name: 'Settings',
+            href: `/${user.role}/settings`,
+            roles: ['patient', 'doctor', 'staff']
+        },
+    ];
+
+    // Filter nav items based on user role
+    const filteredNavForMobile = navItems.filter(item =>
+        item.roles.includes(user.role)
+    );
+
+    const filteredNavForPc = [navItems[0], navItems[1]];
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -40,7 +90,7 @@ const Header = ({ user }: { user: UserTypes }) => {
                     {/* Logo */}
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center">
-                            <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center">
+                            <div className={`h-10 w-10 rounded-full flex items-center justify-center ${user.role === 'doctor' ? 'bg-teal-500' : 'bg-blue-500'} `}>
                                 <span className="text-white font-bold text-xl">NG</span>
                             </div>
                             <div className="flex flex-col h-full ml-2 text-gray-900">
@@ -57,12 +107,13 @@ const Header = ({ user }: { user: UserTypes }) => {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
-                        {navLinks.map((link, index) => (
+                        {filteredNavForPc.map((link, index) => (
                             <Button
                                 key={index}
                                 variant="ghost"
                                 onClick={() => navigate(link.href)}
-                                className="text-gray-600 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                                className={`text-gray-600 px-3 py-2 rounded-md text-sm font-medium transition-colors 
+                                    ${user.role === 'doctor' ? 'hover:text-teal-500 focus:ring-teal-500' : 'hover:text-blue-500'}`}
                             >
                                 {link.name}
                             </Button>
@@ -75,7 +126,8 @@ const Header = ({ user }: { user: UserTypes }) => {
                         <div className="relative">
                             <button
                                 onClick={toggleNotification}
-                                className="text-gray-500 hover:text-blue-500 transition-colors p-1"
+                                className={`text-gray-500 hover:text-blue-500 transition-colors p-1
+                                ${user.role === 'doctor' ? 'hover:text-teal-500' : 'hover:text-blue-500'}`}
                                 aria-label="Notifications"
                                 aria-expanded={isNotificationOpen}
                                 aria-haspopup="true"
@@ -86,8 +138,8 @@ const Header = ({ user }: { user: UserTypes }) => {
                             {/* Notification Dropdown Menu */}
                             {isNotificationOpen && (
                                 <div
-                                    className="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 z-10 ring-1 ring-black ring-opacity-5"
-                                    onBlur={() => setIsProfileOpen(false)}
+                                    className=
+                                    "absolute -right-20 sm:right-0 mt-5 w-80 bg-white rounded-md shadow-lg py-1 z-10 ring-1 ring-black ring-opacity-5"
                                 >
                                     <div className="px-4 py-2 border-b">
                                         <p className="text-sm font-medium text-gray-900">Notifications</p>
@@ -109,7 +161,8 @@ const Header = ({ user }: { user: UserTypes }) => {
                         <div className="relative">
                             <button
                                 onClick={toggleProfile}
-                                className="flex items-center text-gray-500 hover:text-blue-500 transition-colors p-1"
+                                className={`flex items-center text-gray-500 transition-colors p-1
+                                ${user.role === 'doctor' ? 'hover:text-teal-500' : 'hover:text-blue-500'}`}
                                 aria-expanded={isProfileOpen}
                                 aria-haspopup="true"
                             >
@@ -130,7 +183,7 @@ const Header = ({ user }: { user: UserTypes }) => {
                             {/* Profile Dropdown Menu */}
                             {isProfileOpen && isLoggedIn && (
                                 <div
-                                    className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 ring-1 ring-black ring-opacity-5"
+                                    className="absolute right-0 mt-4 w-48 bg-white rounded-md shadow-lg py-1 z-10 ring-1 ring-black ring-opacity-5"
                                     onBlur={() => setIsProfileOpen(false)}
                                 >
                                     <div className="px-4 py-2 border-b">
@@ -159,7 +212,7 @@ const Header = ({ user }: { user: UserTypes }) => {
 
                             {isProfileOpen && !isLoggedIn && (
                                 <div
-                                    className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 ring-1 ring-black ring-opacity-5"
+                                    className="absolute right-0 mt-4 w-48 bg-white rounded-md shadow-lg py-1 z-10 ring-1 ring-black ring-opacity-5"
                                     onBlur={() => setIsProfileOpen(false)}
                                 >
                                     <div className="px-4 py-2 border-b">
@@ -169,17 +222,18 @@ const Header = ({ user }: { user: UserTypes }) => {
                                         className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         onClick={() => { setIsProfileOpen(false); navigate(`/doctor`) }}
                                     >
-                                        <User size={16} className="mr-2" />
+                                        <BriefcaseMedical size={16} className="mr-2" />
                                         Doctor
                                     </button>
                                     <button
                                         onClick={() => {
-                                            handleLogout();
                                             setIsProfileOpen(false);
+                                            navigate(`/patient`)
+
                                         }}
                                         className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     >
-                                        <LogOut size={16} className="mr-2" />
+                                        <User size={16} className="mr-2" />
                                         Patient
                                     </button>
                                 </div>
@@ -205,12 +259,13 @@ const Header = ({ user }: { user: UserTypes }) => {
             {isMenuOpen && (
                 <div className="md:hidden bg-white border-t border-gray-200">
                     <div className="px-2 pt-2 pb-3 space-y-1">
-                        {navLinks.map((link, index) => (
+                        {filteredNavForMobile.map((link, index) => (
                             <Button
                                 key={index}
                                 variant="ghost"
                                 onClick={() => { setIsMenuOpen(false); navigate(link.href) }}
-                                className="text-gray-600 hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium w-full"
+                                className={`text-gray-600 block px-3 py-2 rounded-md text-base font-medium w-full
+                                ${user.role === 'doctor' ? 'hover:text-teal-500' : 'hover:text-blue-500'}`}
                             >
                                 {link.name}
                             </Button>

@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export interface User {
     id: string;
     name: string;
@@ -50,4 +52,18 @@ export interface MedicalRecord {
     treatment: string;
     notes: string;
     followUp?: string;
+    prescription: MedicalPrescription[]
+}
+
+export interface MedicalPrescription {
+    medicine: string,
+    dosage: string,
+    note: string
+}
+
+export interface NavItemHeaders {
+    name: string;
+    href: string;
+    icon?: JSX.Element;
+    roles: string[];
 }
