@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 import HealthCard from "../../components/health-stats/HealthCard"
 import { useState } from "react"
 
-function PatientHealthStat({ userRole }: { userRole: string }) {
+function PatientHealthStat() {
     const navigate = useNavigate();
     const [inDetail, setInDetail] = useState(false);
 

@@ -36,7 +36,7 @@ function Patient() {
                             <Route path="/appointments/:id" element={<AppointmentList role={user.role} />} />
                             <Route path="/records" element={<RecordsDashboard role={user.role} />} />
                             <Route path="/messages" element={<Unavailable />} />
-                            <Route path="/health-stats" element={<PatientHealthStat userRole={user.role} />} />
+                            <Route path="/health-stats" element={<PatientHealthStat />} />
                             <Route path="/profile" element={<PatientProfile user={user} />} />
                             <Route path="/settings" element={<Unavailable />} />
                             <Route path="/appointments/book" element={<AppointmentBooking />} />
