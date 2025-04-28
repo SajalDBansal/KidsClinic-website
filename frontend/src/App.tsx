@@ -20,7 +20,7 @@ function App() {
               <Route path="/auth" element={<Authentication />} />
               <Route path="/patient/*" element={<Patient />} />
               <Route path="/doctor/*" element={<Doctor />} />
-              <Route path="/staff" element={<Staff />} />
+              <Route path="/staff/*" element={<Staff />} />
             </Routes>
           </div>
         </Router>

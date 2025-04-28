@@ -36,13 +36,13 @@ const Sidebar = ({ user }: { user: UserType }) => {
         },
         {
             name: 'Patients',
-            href: '/doctor/patients',
+            href: `/${user.role}/patients`,
             icon: <Users size={20} />,
-            roles: ['doctor']
+            roles: ['doctor', 'staff']
         },
         {
             name: 'Health Stats',
-            href: '/patient/health-stats',
+            href: `/${user.role}/health-stats`,
             icon: <Activity size={20} />,
             roles: ['patient', 'staff']
         },

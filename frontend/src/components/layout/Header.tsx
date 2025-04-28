@@ -28,12 +28,12 @@ const Header = ({ user }: { user: UserTypes }) => {
         },
         {
             name: 'Patients',
-            href: '/doctor/patients',
-            roles: ['doctor']
+            href: `/${user.role}/patients`,
+            roles: ['doctor', 'staff']
         },
         {
             name: 'Health Stats',
-            href: '/patient/health-stats',
+            href: `/${user.role}/health-stats`,
             roles: ['patient', 'staff']
         },
         {

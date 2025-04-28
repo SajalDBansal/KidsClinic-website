@@ -218,12 +218,12 @@ function Authentication() {
                         <div>
                             <Button
                                 type="submit"
-                                variant="primary"
+                                variant='primary'
                                 fullWidth
                                 size="lg"
                                 className={`
-                                    ${selectedRole == 'doctor' && 'bg-teal-500'}
-                                    ${selectedRole == 'staff' && 'bg-cyan-500'}
+                                    ${selectedRole == 'doctor' && 'bg-teal-500 hover:bg-teal-600'}
+                                    ${selectedRole == 'staff' && 'bg-cyan-500 hover:bg-cyan-600'}
                                     `}
                             >
                                 {showRegister ? 'Create Account' : 'Sign In'}

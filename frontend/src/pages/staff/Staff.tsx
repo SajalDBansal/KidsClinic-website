@@ -4,9 +4,10 @@ import Sidebar from "../../components/layout/Sidebar"
 import { SidebarState } from "../../hooks/atoms";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
-import { Calendar } from "lucide-react";
+import { CalendarPlus, UserPlus } from "lucide-react";
 import StaffDashboard from "./StaffDashboard";
 import { mockStaff } from "../../data/mockData";
+import Unavailable from "../../components/shared/Unavailable";
 
 function Staff() {
     const value = useRecoilValue(SidebarState);
@@ -27,10 +28,10 @@ function Staff() {
                             {/* <Route path="/appointments" element={<AppointmentList role={user.role} />} /> */}
                             {/* <Route path="/appointments/:id" element={<AppointmentList role={user.role} />} /> */}
                             {/* <Route path="/patients" element={<SearchPatient />} /> */}
-                            {/* <Route path="/records" element={<CreateRecord />} /> */}
-                            {/* <Route path="/messages" element={<Unavailable />} /> */}
+                            {/* <Route path="/health-stats" element={<CreateRecord />} /> */}
+                            <Route path="/messages" element={<Unavailable />} />
                             {/* <Route path="/profile" element={<DoctorProfile />} /> */}
-                            {/* <Route path="/settings" element={<Unavailable />} /> */}
+                            <Route path="/settings" element={<Unavailable />} />
                         </Routes>
                     </div>
                 </main>
@@ -48,16 +49,24 @@ function WelcomeSection({ username }: { username: string }) {
             <div className="flex flex-col md:flex-row md:items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-bold">Welcome, {username}</h1>
-                    <p className="mt-1 opacity-90">How's your day today</p>
+                    <p className="mt-1 opacity-90">Manage today's appointments and patient information</p>
                 </div>
-                <div className="mt-4 md:mt-0">
+                <div className="mt-4 md:mt-0 flex space-x-3">
                     <Button
                         variant="outline"
                         className="bg-white/10 text-white border-white/20 hover:bg-white/20"
                         onClick={() => navigate("/doctor/appointments")}
-                        icon={<Calendar size={16} />}
+                        icon={<UserPlus size={16} />}
                     >
-                        View Schedule
+                        Register Patient
+                    </Button>
+                    <Button
+                        variant="outline"
+                        className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+                        onClick={() => navigate("/doctor/appointments")}
+                        icon={<CalendarPlus size={16} />}
+                    >
+                        New Appointment
                     </Button>
                 </div>
             </div>
