@@ -161,6 +161,7 @@ function DoctorDashboard() {
                                 variant="secondary"
                                 size="md"
                                 fullWidth
+                                onClick={() => navigate('/doctor/records')}
                             >
                                 Create Medical Record
                             </Button>
@@ -169,6 +170,7 @@ function DoctorDashboard() {
                                 size="md"
                                 className="focus:ring-teal-500"
                                 fullWidth
+                                onClick={() => navigate('/doctor/patients')}
                             >
                                 View Patient History
                             </Button>
@@ -177,6 +179,7 @@ function DoctorDashboard() {
                                 size="md"
                                 className="focus:ring-teal-500"
                                 fullWidth
+                                onClick={() => navigate('/doctor/profile')}
                             >
                                 Update Availability
                             </Button>

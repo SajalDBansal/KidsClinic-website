@@ -32,9 +32,9 @@ const Header = ({ user }: { user: UserTypes }) => {
             roles: ['doctor']
         },
         {
-            name: 'Staff',
-            href: '/staff/employees',
-            roles: ['staff']
+            name: 'Health Stats',
+            href: '/patient/health-stats',
+            roles: ['patient', 'staff']
         },
         {
             name: 'Medical Records',
@@ -42,14 +42,14 @@ const Header = ({ user }: { user: UserTypes }) => {
             roles: ['patient', 'doctor']
         },
         {
+            name: 'Staff',
+            href: `/${user.role}/staff`,
+            roles: ['staff', 'doctor']
+        },
+        {
             name: 'Messages',
             href: `/${user.role}/messages`,
             roles: ['patient', 'doctor', 'staff']
-        },
-        {
-            name: 'Health Stats',
-            href: '/patient/health-stats',
-            roles: ['patient']
         },
         {
             name: 'Profile',
@@ -90,7 +90,11 @@ const Header = ({ user }: { user: UserTypes }) => {
                     {/* Logo */}
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center">
-                            <div className={`h-10 w-10 rounded-full flex items-center justify-center ${user.role === 'doctor' ? 'bg-teal-500' : 'bg-blue-500'} `}>
+                            <div className={`h-10 w-10 rounded-full flex items-center justify-center bg-blue-500
+                                    ${user.role === 'doctor' && ('bg-teal-500')} 
+                                    ${user.role === 'staff' && ('bg-cyan-500')} 
+                                    `}
+                            >
                                 <span className="text-white font-bold text-xl">NG</span>
                             </div>
                             <div className="flex flex-col h-full ml-2 text-gray-900">
@@ -112,8 +116,10 @@ const Header = ({ user }: { user: UserTypes }) => {
                                 key={index}
                                 variant="ghost"
                                 onClick={() => navigate(link.href)}
-                                className={`text-gray-600 px-3 py-2 rounded-md text-sm font-medium transition-colors 
-                                    ${user.role === 'doctor' ? 'hover:text-teal-500 focus:ring-teal-500' : 'hover:text-blue-500'}`}
+                                className={`text-gray-600 px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-blue-500
+                                    ${user.role === 'doctor' && ('hover:text-teal-500 focus:ring-teal-500')}
+                                    ${user.role === 'staff' && ('hover:text-cyan-500 focus:ring-cyan-500')}
+                                    `}
                             >
                                 {link.name}
                             </Button>
@@ -127,7 +133,9 @@ const Header = ({ user }: { user: UserTypes }) => {
                             <button
                                 onClick={toggleNotification}
                                 className={`text-gray-500 hover:text-blue-500 transition-colors p-1
-                                ${user.role === 'doctor' ? 'hover:text-teal-500' : 'hover:text-blue-500'}`}
+                                ${user.role === 'doctor' && ('hover:text-teal-500')}
+                                ${user.role === 'staff' && ('hover:text-cyan-500')}
+                                `}
                                 aria-label="Notifications"
                                 aria-expanded={isNotificationOpen}
                                 aria-haspopup="true"
@@ -161,8 +169,10 @@ const Header = ({ user }: { user: UserTypes }) => {
                         <div className="relative">
                             <button
                                 onClick={toggleProfile}
-                                className={`flex items-center text-gray-500 transition-colors p-1
-                                ${user.role === 'doctor' ? 'hover:text-teal-500' : 'hover:text-blue-500'}`}
+                                className={`flex items-center text-gray-500 transition-colors p-1 hover:text-blue-500
+                                    ${user.role === 'doctor' && ('hover:text-teal-500')}
+                                    ${user.role === 'staff' && ('hover:text-cyan-500')}
+                                `}
                                 aria-expanded={isProfileOpen}
                                 aria-haspopup="true"
                             >
@@ -201,6 +211,7 @@ const Header = ({ user }: { user: UserTypes }) => {
                                         onClick={() => {
                                             handleLogout();
                                             setIsProfileOpen(false);
+                                            navigate('/');
                                         }}
                                         className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     >
@@ -219,8 +230,19 @@ const Header = ({ user }: { user: UserTypes }) => {
                                         <p className="text-sm font-medium text-gray-900">Login</p>
                                     </div>
                                     <button
+                                        onClick={() => {
+                                            setIsProfileOpen(false);
+                                            navigate(`/auth`)
+
+                                        }}
                                         className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        onClick={() => { setIsProfileOpen(false); navigate(`/doctor`) }}
+                                    >
+                                        <User size={16} className="mr-2" />
+                                        Patient
+                                    </button>
+                                    <button
+                                        className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        onClick={() => { setIsProfileOpen(false); navigate(`/auth`) }}
                                     >
                                         <BriefcaseMedical size={16} className="mr-2" />
                                         Doctor
@@ -228,13 +250,13 @@ const Header = ({ user }: { user: UserTypes }) => {
                                     <button
                                         onClick={() => {
                                             setIsProfileOpen(false);
-                                            navigate(`/patient`)
+                                            navigate(`/auth`)
 
                                         }}
                                         className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     >
                                         <User size={16} className="mr-2" />
-                                        Patient
+                                        Staff
                                     </button>
                                 </div>
                             )}
@@ -245,7 +267,10 @@ const Header = ({ user }: { user: UserTypes }) => {
                         <div className="md:hidden">
                             <button
                                 onClick={toggleMenu}
-                                className="text-gray-500 hover:text-blue-500 transition-colors"
+                                className={`text-gray-500 hover:text-blue-500 transition-colors
+                                    ${user.role === 'doctor' && ('hover:text-teal-500')}
+                                    ${user.role === 'staff' && ('hover:text-cyan-500')}
+                                    `}
                                 aria-expanded={isMenuOpen}
                             >
                                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -264,8 +289,10 @@ const Header = ({ user }: { user: UserTypes }) => {
                                 key={index}
                                 variant="ghost"
                                 onClick={() => { setIsMenuOpen(false); navigate(link.href) }}
-                                className={`text-gray-600 block px-3 py-2 rounded-md text-base font-medium w-full
-                                ${user.role === 'doctor' ? 'hover:text-teal-500' : 'hover:text-blue-500'}`}
+                                className={`text-gray-600 block px-3 py-2 rounded-md text-base font-medium w-full hover:text-blue-500
+                                ${user.role === 'doctor' && 'hover:text-teal-500'}
+                                ${user.role === 'staff' && 'hover:text-cyan-500'}
+                                `}
                             >
                                 {link.name}
                             </Button>

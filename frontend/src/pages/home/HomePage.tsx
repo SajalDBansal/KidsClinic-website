@@ -50,7 +50,8 @@ function HomePage() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const user = doctors[0];
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
@@ -168,8 +169,8 @@ function HomePage() {
                                 >
                                     {isLoggedIn && (
                                         <Avatar
-                                            src={doctors[0].profileImage}
-                                            alt={doctors[0].name}
+                                            src={user.profileImage}
+                                            alt={user.name}
                                             size="sm"
                                             className="cursor-pointer"
                                         />
@@ -187,8 +188,8 @@ function HomePage() {
                                         onBlur={() => setIsProfileOpen(false)}
                                     >
                                         <div className="px-4 py-2 border-b">
-                                            <p className="text-sm font-medium text-gray-900">{doctors[0].name}</p>
-                                            <p className="text-xs text-gray-500">{doctors[0].email}</p>
+                                            <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                                            <p className="text-xs text-gray-500">{user.email}</p>
                                         </div>
                                         <button
                                             className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -220,7 +221,7 @@ function HomePage() {
                                         </div>
                                         <button
                                             className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            onClick={() => { setIsProfileOpen(false); navigate('/doctor') }}
+                                            onClick={() => { setIsProfileOpen(false); navigate('/auth') }}
                                         >
                                             <User size={16} className="mr-2" />
                                             Doctor
@@ -229,12 +230,23 @@ function HomePage() {
                                             onClick={() => {
                                                 handleLogout();
                                                 setIsProfileOpen(false);
-                                                navigate('/patient');
+                                                navigate('/auth');
                                             }}
                                             className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         >
                                             <LogOut size={16} className="mr-2" />
                                             Patient
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setIsProfileOpen(false);
+                                                navigate(`/auth`)
+
+                                            }}
+                                            className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        >
+                                            <User size={16} className="mr-2" />
+                                            Staff
                                         </button>
                                     </div>
                                 )}
@@ -303,7 +315,7 @@ function HomePage() {
                                 variant="primary"
                                 className="bg-transparent border text-blue-600 hover:bg-white/10 hover:border-none"
                                 size="lg"
-                                onClick={() => navigate('/patient')}
+                                onClick={() => navigate('/auth')}
                             >
                                 Book Appointment
                             </Button>
@@ -539,9 +551,12 @@ function HomePage() {
             {/* Rights */}
             <div className="bg-gradient-to-r from-blue-500 to-blue-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between">
-                        <p className="my-2 text-md text-blue-100 text-start">
-                            Copyright ©2021-2024 Dr. Navneet Goel Pediatrics Practice. All Rights Reserved. Designed by Sajal
+                    <div className="flex flex-col sm:flex-row sm:justify-between">
+                        <p className="my-2 text-xs sm:text-md text-blue-100 text-start">
+                            Copyright ©2021-2024 Dr. Navneet Goel Pediatrics Practice.
+                        </p>
+                        <p className="my-2 text-xs sm:text-md text-blue-100 text-start">
+                            All Rights Reserved. Designed by Sajal
                         </p>
                     </div>
                 </div>

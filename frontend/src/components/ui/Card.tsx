@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react';
+import Button from './Button';
 
 interface CardProps {
     title?: string;
@@ -25,10 +26,13 @@ const Card: FC<CardProps> = ({
     `}>
             {(title || subtitle) && (
                 <div className="p-4 border-b border-gray-100">
-                    {title && <h3 className="text-lg font-semibold text-gray-800">{title}</h3>}
-                    {subtitle && <p className="mt-1 text-sm text-gray-500">{subtitle}</p>}
+                    <div>
+                        {title && <h3 className="text-lg font-semibold text-gray-800">{title}</h3>}
+                        {subtitle && <p className="mt-1 text-sm text-gray-500">{subtitle}</p>}
+                    </div>
                 </div>
             )}
+
             <div className="p-4">{children}</div>
             {footer && <div className="p-4 bg-gray-50 border-t border-gray-100">{footer}</div>}
         </div>

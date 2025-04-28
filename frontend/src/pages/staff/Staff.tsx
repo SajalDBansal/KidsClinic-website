@@ -5,18 +5,12 @@ import { SidebarState } from "../../hooks/atoms";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import { Calendar } from "lucide-react";
-import DoctorDashboard from "./DoctorDashboard";
-import { doctors } from "../../data/doctors";
-import AppointmentList from "../appointments/AppointmentsList";
-import SearchPatient from "./SearchPatient";
-import CreateRecord from "./CreateRecord";
-import Unavailable from "../../components/shared/Unavailable";
-import DoctorProfile from "./DoctorProfile";
-import StaffManagementPage from "./staffManage";
+import StaffDashboard from "./StaffDashboard";
+import { mockStaff } from "../../data/mockData";
 
-function Doctor() {
+function Staff() {
     const value = useRecoilValue(SidebarState);
-    const user = doctors[0];
+    const user = mockStaff[0];
     const location = useLocation();
     return (
         <>
@@ -26,17 +20,17 @@ function Doctor() {
                 <main className={`${value ? 'ml-0 md:ml-16' : 'ml-0 md:ml-64'} w-full min-h-screen transition-all duration-300`}>
                     <div className={` max-w-7xl mt-18 mx-auto px-4 py-2`}>
                         {/* Welcome Section */}
-                        {location.pathname == "/doctor" && (<WelcomeSection username={user.name} />)}
+                        {location.pathname == "/staff" && (<WelcomeSection username={user.name} />)}
+
                         <Routes>
-                            <Route path="/" element={<DoctorDashboard />} />
-                            <Route path="/appointments" element={<AppointmentList role={user.role} />} />
-                            <Route path="/appointments/:id" element={<AppointmentList role={user.role} />} />
-                            <Route path="/patients" element={<SearchPatient />} />
-                            <Route path="/records" element={<CreateRecord />} />
-                            <Route path="/staff" element={<StaffManagementPage />} />
-                            <Route path="/messages" element={<Unavailable />} />
-                            <Route path="/profile" element={<DoctorProfile />} />
-                            <Route path="/settings" element={<Unavailable />} />
+                            <Route path="/" element={<StaffDashboard />} />
+                            {/* <Route path="/appointments" element={<AppointmentList role={user.role} />} /> */}
+                            {/* <Route path="/appointments/:id" element={<AppointmentList role={user.role} />} /> */}
+                            {/* <Route path="/patients" element={<SearchPatient />} /> */}
+                            {/* <Route path="/records" element={<CreateRecord />} /> */}
+                            {/* <Route path="/messages" element={<Unavailable />} /> */}
+                            {/* <Route path="/profile" element={<DoctorProfile />} /> */}
+                            {/* <Route path="/settings" element={<Unavailable />} /> */}
                         </Routes>
                     </div>
                 </main>
@@ -45,12 +39,12 @@ function Doctor() {
     )
 }
 
-export default Doctor
+export default Staff
 
 function WelcomeSection({ username }: { username: string }) {
     const navigate = useNavigate();
     return (
-        <div className="mb-8 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-xl p-6 shadow-md">
+        <div className="mb-8 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white rounded-xl p-6 shadow-md">
             <div className="flex flex-col md:flex-row md:items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-bold">Welcome, {username}</h1>

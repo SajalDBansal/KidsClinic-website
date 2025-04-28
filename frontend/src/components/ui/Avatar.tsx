@@ -3,7 +3,7 @@ import { FC } from 'react';
 interface AvatarProps {
     src?: string;
     alt: string;
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | 'smlg';
     status?: 'online' | 'offline' | 'busy' | 'away';
     className?: string;
 }
@@ -18,7 +18,8 @@ const Avatar: FC<AvatarProps> = ({
     const sizeStyles = {
         sm: 'h-8 w-8',
         md: 'h-10 w-10',
-        lg: 'h-24 w-24'
+        lg: 'h-24 w-24',
+        smlg: 'h-8 w-8 md:h-24 md:w-24'
     };
 
     const statusColors = {

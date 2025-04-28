@@ -5,7 +5,7 @@ import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
 import { mockPatients } from "../../data/patient";
 
-function RecordsDashboard({ role }: { role: 'patient' | 'doctor' | 'staff' }) {
+function PatientRecordsDashboard({ role }: { role: 'patient' | 'doctor' | 'staff' }) {
     const patient = mockPatients[0];
     const recentRecords = patient.medicalHistory?.slice(0, 2) || [];
     const [inDetail, setInDetail] = useState(false);
@@ -65,10 +65,6 @@ function RecordsDashboard({ role }: { role: 'patient' | 'doctor' | 'staff' }) {
                     </section>
 
                 )}
-
-
-
-
             </div>
 
         </>
@@ -77,4 +73,4 @@ function RecordsDashboard({ role }: { role: 'patient' | 'doctor' | 'staff' }) {
 
 }
 
-export default RecordsDashboard;
+export default PatientRecordsDashboard;

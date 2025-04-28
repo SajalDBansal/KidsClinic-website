@@ -28,6 +28,7 @@ export interface Staff extends User {
     role: 'staff';
     department: string;
     position: string;
+    status?: 'active' | 'inactive';
 }
 
 export interface Appointment {
@@ -66,4 +67,15 @@ export interface NavItemHeaders {
     href: string;
     icon?: JSX.Element;
     roles: string[];
+}
+
+
+export interface MedicalRecordForm {
+    diagnosis: string;
+    treatment: string;
+    medicines: Array<{ name: string; dosage: string; duration: string }>;
+    advice: string;
+    tags: string[];
+    nextAppointment?: string;
+    tests?: string[];
 }

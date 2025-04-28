@@ -7,7 +7,8 @@ import {
     Settings,
     User,
     MessageSquare,
-    Activity
+    Activity,
+    PersonStanding
 } from 'lucide-react';
 
 import { NavItemHeaders, User as UserType } from '../../types';
@@ -40,10 +41,10 @@ const Sidebar = ({ user }: { user: UserType }) => {
             roles: ['doctor']
         },
         {
-            name: 'Staff',
-            href: '/staff/employees',
-            icon: <Users size={20} />,
-            roles: ['staff']
+            name: 'Health Stats',
+            href: '/patient/health-stats',
+            icon: <Activity size={20} />,
+            roles: ['patient', 'staff']
         },
         {
             name: 'Medical Records',
@@ -52,16 +53,16 @@ const Sidebar = ({ user }: { user: UserType }) => {
             roles: ['patient', 'doctor']
         },
         {
+            name: 'Staff',
+            href: `/${user.role}/staff`,
+            icon: <PersonStanding size={20} />,
+            roles: ['staff', 'doctor']
+        },
+        {
             name: 'Messages',
             href: `/${user.role}/messages`,
             icon: <MessageSquare size={20} />,
             roles: ['patient', 'doctor', 'staff']
-        },
-        {
-            name: 'Health Stats',
-            href: '/patient/health-stats',
-            icon: <Activity size={20} />,
-            roles: ['patient']
         },
         {
             name: 'Profile',
@@ -108,7 +109,10 @@ const Sidebar = ({ user }: { user: UserType }) => {
                                 <Link
                                     to={item.href}
                                     className={`flex items-center px-3 py-2 rounded-md transition-colors
-                                                ${isActive ? `bg-blue-50 text-blue-700 ${user.role == "doctor" ? 'text-teal-700' : 'text-blue-700'}`
+                                                ${isActive ? `bg-blue-50 text-blue-700 
+                                                    ${user.role == "doctor" && ('text-teal-700 bg-teal-50')}
+                                                    ${user.role == "staff" && ('text-cyan-700 bg-cyan-50')}
+                                                    `
                                             : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'}`}
                                 >
                                     <span className="mr-3">{item.icon}</span>
@@ -122,14 +126,26 @@ const Sidebar = ({ user }: { user: UserType }) => {
 
             <div className="absolute bottom-15 left-0 right-0 p-4">
                 {!value && (
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                        <h4 className={`font-medium ${user.role == "doctor" ? 'text-teal-800' : 'text-blue-800'}`}>
+                    <div className={`bg-blue-50 p-4 rounded-lg
+                        ${user.role == "doctor" && ('bg-teal-50')}
+                            ${user.role == "staff" && ('bg-cyan-50')}
+                    `}>
+                        <h4 className={`font-medium 'text-blue-800'
+                            ${user.role == "doctor" && ('text-teal-800')}
+                            ${user.role == "staff" && ('text-cyan-800')}
+                            `}>
                             Need Help?
                         </h4>
-                        <p className={`text-sm mt-1 ${user.role == "doctor" ? 'text-teal-700' : 'text-blue-700'}`}>
+                        <p className={`text-sm mt-1 text-blue-700
+                            ${user.role == "doctor" && ('text-teal-700')}
+                            ${user.role == "staff" && ('text-cyan-700')}
+                            `}>
                             Contact our support team anytime
                         </p>
-                        <button className={`mt-2 text-sm font-medium text-white  py-1 px-3 rounded-md transition-colors ${user.role == "doctor" ? 'bg-teal-600 hover:bg-teal-700' : 'bg-blue-600 hover:bg-blue-700'}`}>
+                        <button className={`mt-2 text-sm font-medium text-white  py-1 px-3 rounded-md transition-colors bg-blue-600 hover:bg-blue-700
+                            ${user.role == "doctor" && ('bg-teal-600 hover:bg-teal-700')}
+                            ${user.role == "staff" && ('bg-cyan-600 hover:bg-cyan-700')}
+                            `}>
                             Get Support
                         </button>
                     </div>

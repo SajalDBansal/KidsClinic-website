@@ -8,11 +8,11 @@ import PatientDashboard from "./PatientDashboard";
 import AppointmentList from "../appointments/AppointmentsList";
 import Button from "../../components/ui/Button";
 import { Plus } from "lucide-react";
-import RecordsDashboard from "../records/RecordsDashboard";
 import Unavailable from "../../components/shared/Unavailable";
 import PatientHealthStat from "./PatientHealthStat";
 import PatientProfile from "./PatientProfile";
 import AppointmentBooking from "../appointments/AppointmentBooking";
+import PatientRecordsDashboard from "./PatientRecords";
 
 function Patient() {
     const value = useRecoilValue(SidebarState);
@@ -34,7 +34,7 @@ function Patient() {
                             <Route path="/" element={<PatientDashboard />} />
                             <Route path="/appointments" element={<AppointmentList role={user.role} />} />
                             <Route path="/appointments/:id" element={<AppointmentList role={user.role} />} />
-                            <Route path="/records" element={<RecordsDashboard role={user.role} />} />
+                            <Route path="/records" element={<PatientRecordsDashboard role={user.role} />} />
                             <Route path="/messages" element={<Unavailable />} />
                             <Route path="/health-stats" element={<PatientHealthStat />} />
                             <Route path="/profile" element={<PatientProfile user={user} />} />
